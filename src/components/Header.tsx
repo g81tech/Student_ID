@@ -1,14 +1,15 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import NextLink from 'next/link'
-
 import LogoStudentID from '../assets/CE.svg'
 
 import * as C from '../styles/components.Styles'
 
-export function Header() {
+export default function Header() {
     return (
       <C.Nav>
         <img src="/uneb.png" />
-        <LogoStudentID class="CE" />
+        <LogoStudentID className="CE" />
 
         <C.Menu>
             <ul>

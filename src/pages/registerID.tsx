@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import {postDB} from '../lib/postDB'
+import { Button, Input } from '../styles/components.Styles'
 
 import * as C from '../styles/pages.Styles'
 
@@ -46,21 +47,21 @@ const Register: NextPage = () => {
         
         <h1>Cadastrar</h1>
         <form onSubmit={handleSubmit(registration)}>
-          <input
+          <Input
             {...register('matriculation')}
             placeholder='Matrícula'
-            type='number'
+            type='text'
             name='matriculation'
             required
         />
-        <input
+        <Input
             {...register('password')}
             placeholder='Senha'
             type='password'
             name='password'
             required
         />
-          <button type='submit'>Validar</button>
+          <Button  type='submit'>Validar</Button>
       </form>
 
     </C.Container>

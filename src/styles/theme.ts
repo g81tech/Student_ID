@@ -1,10 +1,16 @@
 const theme = {
-    colors: {
-        background: '#e1e1e6',
-        text: '#000',
-        primary: '#000',
-        secundary: '#e1e1e6',
+  colors: {
+    background: "#E5E5E5",
+    text: {
+      primary: "#000",
+      secondary: "#FFFF",
     },
-}
+    inherit:"#939393",
+    primary: "#3ABFA4",
+    secondary: "#FF3C3C",
+    tertiary: "#628C84",
+    indicator: "#227363",
+  },
+};
 
-export default theme
+export default theme;
