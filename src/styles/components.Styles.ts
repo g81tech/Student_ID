@@ -72,7 +72,6 @@ export const Button = styled.button`
   border-radius: 20px;
   border: none;
   :hover,
-  :active,
   :focus {
     background-color: ${(props) =>
       props.color === "primary"
