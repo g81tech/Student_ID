@@ -6,9 +6,9 @@ const theme = {
       secondary: "#FFFF",
     },
     inherit:"#939393",
-    primary: "#3ABFA4",
+    primary: "#009774",
     secondary: "#FF3C3C",
-    tertiary: "#628C84",
+    tertiary: "#000",
     indicator: "#227363",
   },
 };

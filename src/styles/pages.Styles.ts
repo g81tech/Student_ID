@@ -7,6 +7,7 @@ export const Container = styled.div`
     margin: 2rem auto 2rem auto;
 `
 export const Filter = styled.div`
+  display: flex;
   height: 5rem;
   background: ${(props) => props.theme.colors.primary};
   margin-bottom: 2rem;
