@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer";
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+const authStudent = async(req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "POST": {
       return checkInfoStudents(req, res);
@@ -22,17 +22,16 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
   const { matriculation, password } = req.body;
 
   let browser;
-  try {
-    browser = await puppeteer.launch({
+  
+  browser = await puppeteer.launch({
       headless: true, //false abre interface gráfica true não abre.
       defaultViewport: null, //Tira o tamanho padrão 800x600
       args: ["--disable-setuid-sandbox", "--start-maximized"], //permite que seja uma página http e página maximizada
       ignoreHTTPSErrors: true,
     });
-
+  try {
     const page = await browser.newPage();
-    await page.goto(`${pagePrimary}`);
-
+    await page.goto(`${pagePrimary}`, {timeout: 10000});
     //O puppeter insere os dados de matrícula e senha nos campos e envia
     await page.type(
       '[name="ctl00$PageContent$LoginPanel$UserName"]',
@@ -67,8 +66,9 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
       });
     }
   } catch (err) {
+    await browser.close();
     console.log("Erro ao executar => : ", err);
-    return res.status(501).json({
+    return res.status(404).json({
       success: false,
     });
   }
@@ -78,3 +78,4 @@ async function getStudentsID(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({ result: 'Carteirinhas cadastradas no banco de dados' })
 }
 
+export default authStudent

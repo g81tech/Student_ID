@@ -14,22 +14,22 @@ export default function Header() {
         <C.Menu>
             <ul>
                 <li>
-                    <NextLink href={'/'}>Início</NextLink>
+                    <NextLink href={'/'}>INÍCIO</NextLink>
                 </li>
                 <li>
-                    <NextLink href="/searchID">Pesquisar Carteirinha</NextLink>
+                    <NextLink href="/searchID">PESQUISAR CARTEIRINHA</NextLink>
                 </li>
                 <li>
-                    <NextLink href="/registerID">Cadastrar</NextLink>
+                    <NextLink href="/registerID">CADASTRAR</NextLink>
                 </li>
                 <li>
-                    <a style={{cursor: 'not-allowed'}}>Alterar Dados</a>
+                    <NextLink href="/myID">MINHA CARTEIRINHA</NextLink>
                 </li>
                 <li>
-                    <NextLink href="/revalidateID">Revalidar</NextLink>
+                    <NextLink href="/revalidateID">REVALIDAR</NextLink>
                 </li>
                 <li>
-                    <NextLink href="/about">Sobre</NextLink>
+                    <NextLink href="/about">SOBRE</NextLink>
                 </li>
             </ul>
         </C.Menu>

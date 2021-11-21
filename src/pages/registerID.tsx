@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
+import Router from "next/router";
+
 import Head from 'next/head'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import {postDB} from '../lib/postDB'
-import { Button, Input } from '../styles/components.Styles'
 
 import * as C from '../styles/pages.Styles'
 
@@ -26,19 +26,32 @@ export const registration: SubmitHandler<Form> = async (data) =>
   })
   //resposta com apenas o nome do(a) aluno(a) se houver.
   const result = await res.json()
+  const posp = 'fpo'
 
   //Chamada de função se houver resposta com o nome #ParaFazer
-  console.log(result)
-
-  //Modal de erro: 501- Falha na conexão, tente depois ou entre em contato // 500- login não realizado. #ParaFazer
-  console.log(result)
+  if (result.nome != undefined){
+    console.log("Chamada para preencher o formulário")
+  }
+  else if (result.statusCode === 500)
+  {
+    console.log("Erro nos dados informados.")
+  }
+  else if (result.statusCode === 404)
+  {
+    console.log("404 erro")
+    //Router.push({pathname: '/myID', query: { nome: posp }});
+    Router.push('/myID')
+  }
+  
   
   //Chamada postar no banco de dados #ParaFazer
-  postDB(result)
+//  postDB(result)
 }
 
 const Register: NextPage = () => {
     const { register, handleSubmit } = useForm();
+    
+    
     return(
         <C.Container>
         <Head>
@@ -47,21 +60,21 @@ const Register: NextPage = () => {
         
         <h1>Cadastrar</h1>
         <form onSubmit={handleSubmit(registration)}>
-          <Input
+          <C.Input
             {...register('matriculation')}
             placeholder='Matrícula'
             type='text'
             name='matriculation'
             required
         />
-        <Input
+        <C.Input
             {...register('password')}
             placeholder='Senha'
             type='password'
             name='password'
             required
         />
-          <Button  type='submit'>Validar</Button>
+          <C.Button  type='submit'>Validar</C.Button>
       </form>
 
     </C.Container>
