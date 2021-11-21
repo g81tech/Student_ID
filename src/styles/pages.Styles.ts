@@ -18,6 +18,16 @@ export const Filter = styled.div`
     list-style: none;
     display: flex;
   }
+  p {
+    margin: auto 0;
+    margin-right: 1rem;
+  }
+  select {
+    border-radius: 0.7rem;
+    margin-right: 2rem;
+    border: none;
+    outline:0px;
+  }
 `
 
 export const ListID = styled.div`
@@ -36,7 +46,7 @@ export const ListID = styled.div`
 
     display: grid;
     grid-template-areas:
-    'image data data data data data'
+    'image image data data data data'
     'university university university university university university';
     grid-gap: 1rem;
   }
@@ -44,16 +54,9 @@ export const ListID = styled.div`
   .image {
     grid-area: image;
   }
-  .image img {
-    width: '100%';
-    height: 'auto';
-    border-radius: '1rem';
-    border: 'solid 10px ${(props) => props.theme.colors.primary}'
-    
-  }
   .data {
     grid-area: data;
-    width: 15rem;
+    width: 13rem;
     text-align: center;
     font-size: 12px;
     color: #fff;
