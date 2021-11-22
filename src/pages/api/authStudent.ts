@@ -53,11 +53,12 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
         // pdf: document.getElementsByTagName("iframe")[0].src, //pega o pdf comprovante de matrícula ou histórico
       };
     });
+    console.log(list);
     await browser.close();
     if (list.name != undefined)
     {
       res.status(200).send({
-        nome: list.name,
+        name: list.name,
         // pdf: list.pdf, //retorno do pdf do comprovante de matrícula ou histórico
       });
     }
