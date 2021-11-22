@@ -95,9 +95,9 @@ const Register: NextPage = () => {
       <Head>
         <title>Cadastrar | Carteirinha Estudantil | UNEB</title>
       </Head>
-      {/*  <C.TextCard>
+       <C.TextCard>
         <text>Informações que vem aqui</text>
-      </C.TextCard> */}
+      </C.TextCard>
 
       <C.FormRegister onSubmit={handleSubmit(registration)}>
         <h2>INSIRA OS DADOS DE ACESSO AO SAGRES</h2>

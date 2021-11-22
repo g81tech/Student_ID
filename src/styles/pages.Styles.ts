@@ -142,7 +142,7 @@ export const Input = styled.input`
 export const TextCard = styled.div`
   display: flex;
   min-height: 5rem;
-  background: ${(props) => props.theme.colors.primary};
+  background: ${(props) => props.theme.colors.inherit};
   margin-bottom: 10px;
   border-radius: 1.5rem;
   padding: 1rem;
