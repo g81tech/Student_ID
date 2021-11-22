@@ -25,7 +25,7 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
   let browser;
   
   browser = await puppeteer.launch({
-      headless: true, //false abre interface gráfica true não abre.
+      headless: false, //false abre interface gráfica true não abre.
       defaultViewport: null, //Tira o tamanho padrão 800x600
       args: ["--disable-setuid-sandbox", "--start-maximized"], //permite que seja uma página http e página maximizada
       ignoreHTTPSErrors: true,
