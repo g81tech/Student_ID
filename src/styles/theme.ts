@@ -8,7 +8,7 @@ const theme = {
     inherit:"#939393",
     primary: "#009774",
     secondary: "#FF3C3C",
-    tertiary: "#000",
+    tertiary: "#1D6151",
     indicator: "#227363",
   },
 };

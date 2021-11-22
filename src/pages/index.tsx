@@ -33,6 +33,42 @@ const semester = [
   { numberSemester: "11", key: 11 },
   { numberSemester: "12", key: 12 },
 ];
+function dataStudent(
+  name: string,
+  courseStudent: string,
+  status: boolean,
+  semester: string,
+  code: number,
+  image: string
+) {
+  return { name, courseStudent, status, semester, code, image };
+}
+const students = [
+  dataStudent(
+    "Gabriel Silva da Cruz",
+    "Sistemas de Informação",
+    true,
+    "5º Semestre",
+    789562216,
+    "https://github.com/Gabrielg81.png"
+  ),
+  dataStudent(
+    "Alex Silva",
+    "Sistemas de Informação",
+    true,
+    "5º Semestre",
+    45566565,
+    "https://github.com/leksansilva.png"
+  ),
+  dataStudent(
+    "João Paulo",
+    "Sistemas de Informação",
+    true,
+    "5º Semestre",
+    342423343,
+    "https://github.com/jps198.png"
+  ),
+];
 
 // const Home: NextPage = () => {
 const Home: NextPage<{ data: Data }> = (props) => {
@@ -40,8 +76,8 @@ const Home: NextPage<{ data: Data }> = (props) => {
     "https://portal.uneb.br/wp-content/themes/tema_padrao/inc/image/logo.png";
   const universityName = "Universidade do Estado da Bahia";
 
-  const [selectedFilterCourse, setSelectedFilterCourse] = useState(0);
-  const [selectedFilterSemester, setSelectedFilterSemester] = useState(0);
+  const [selectedFilterCourse, setSelectedFilterCourse] = useState({});
+  const [selectedFilterSemester, setSelectedFilterSemester] = useState({});
 
   function parseSelected(event: any) {
     const valueToParse = event.target.value;
@@ -58,18 +94,16 @@ const Home: NextPage<{ data: Data }> = (props) => {
       </Head>
 
       <C.Filter>
-        <p>
-          Filtragem por curso
-          </p>
-          <select name="any" id="any" onChange={parseSelected}>
-            {courses.map((course) => (
-              <option key={course.key} value={JSON.stringify(course)}>
-                {course.nameCourse}
-              </option>
-            ))}
-          </select>
-        
-        <p>Filtragem por semestre</p>
+        <p style={{ color: "#fff" }}>Filtragem por curso</p>
+        <select name="any" id="any" onChange={parseSelected}>
+          {courses.map((course) => (
+            <option key={course.key} value={JSON.stringify(course)}>
+              {course.nameCourse}
+            </option>
+          ))}
+        </select>
+
+        <p style={{ color: "#fff" }}>Filtragem por semestre</p>
         <select name="any" id="any" onChange={parseSelected}>
           {semester.map((semester) => (
             <option key={semester.key} value={JSON.stringify(semester)}>
@@ -82,107 +116,41 @@ const Home: NextPage<{ data: Data }> = (props) => {
 
       <p>Filtro semestre: {selectedFilterSemester.numberSemester}</p>
       <C.ListID>
-        <div className="id">
-          <div className="image">
-            <img
-              style={{
-                width: "100%",
-                height: "auto",
-                borderRadius: "1rem",
-                border: "0.2rem solid #009774",
-              }}
-              src="https://github.com/Gabrielg81.png"
-            />
+        {students.map((student, index) => (
+          <div key={index} className="id">
+            <div className="image">
+              <img
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "1rem",
+                  border: "0.2rem solid #009774",
+                }}
+                src={student.image}
+              />
+            </div>
+            <div className="data">
+              <p>{student.name}</p>
+              <p>{student.courseStudent}</p>
+              <p>{student.status ? "Ativo" : "Inativo"}</p>
+              <p>{student.semester}</p>
+              <p>{student.code}</p>
+            </div>
+            <div className="university">
+              <img style={{ width: "5rem" }} src={universityImage} />
+              <p
+                style={{
+                  alignItems: "center",
+                  fontSize: "10px",
+                  display: "flex",
+                  margin: "0 auto",
+                }}
+              >
+                {universityName}
+              </p>
+            </div>
           </div>
-          <div className="data">
-            <p>Gabriel Silva da Cruz</p>
-            <p>Sistemas de Informação</p>
-            <p>Ativo</p>
-            <p>Semestre 5</p>
-            <p>789562216</p>
-          </div>
-          <div className="university">
-            <img style={{ width: "5rem" }} src={universityImage} />
-            <p
-              style={{
-                alignItems: "center",
-                fontSize: "10px",
-                display: "flex",
-                margin: "0 auto",
-              }}
-            >
-              {universityName}
-            </p>
-          </div>
-        </div>
-
-        <div className="id">
-          <div className="image">
-            <img
-              style={{
-                width: "100%",
-                height: "auto",
-                borderRadius: "1rem",
-                border: "0.2rem solid #009774",
-              }}
-              src="https://github.com/leksansilva.png"
-            />
-          </div>
-          <div className="data">
-            <p>Alex Silva</p>
-            <p>Sistemas de Informação</p>
-            <p>Ativo</p>
-            <p>Semestre 5</p>
-            <p>59454564</p>
-          </div>
-          <div className="university">
-            <img style={{ width: "5rem" }} src={universityImage} />
-            <p
-              style={{
-                alignItems: "center",
-                fontSize: "10px",
-                display: "flex",
-                margin: "0 auto",
-              }}
-            >
-              {universityName}
-            </p>
-          </div>
-        </div>
-
-        <div className="id">
-          <div className="image">
-            <img
-              style={{
-                width: "100%",
-                height: "auto",
-                borderRadius: "1rem",
-                border: "solid 0.2rem #009774",
-              }}
-              src="https://github.com/jps198.png"
-            />
-          </div>
-          <div className="data">
-            <p>João Paulo</p>
-            <p>Sistemas de Informação</p>
-            <p>Ativo</p>
-            <p>Semestre 5</p>
-            <p>45566565</p>
-          </div>
-          <div className="university">
-            <img style={{ width: "5rem" }} src={universityImage} />
-            <p
-              style={{
-                alignItems: "center",
-                fontSize: "10px",
-                display: "flex",
-                margin: "0 auto",
-              }}
-            >
-              {universityName}
-            </p>
-          </div>
-        </div>
+        ))}
       </C.ListID>
     </C.Container>
   );
