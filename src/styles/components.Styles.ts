@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { MdClose } from "react-icons/md";
 export const Nav = styled.div`
   width: 100%;
 
@@ -56,4 +56,89 @@ export const Menu = styled.div`
   .disable a:hover {
     cursor: "not-allowed";
   }
+`;
+
+export const Background = styled.div`
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  left: 250px;
+  justify-content: center;
+  align-items: center;
+`;
+export const CardModal = styled.div`
+  width: 400px;
+  background-color: #ccc;
+  background-image: linear-gradient(
+    ${(props) => props.theme.colors.background},
+    ${(props) => props.theme.colors.text.secondary}
+  );
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  border: solid 0.2rem ${(props) => props.theme.colors.primary};
+  box-shadow: 0 0 0.5rem rgba(50, 50, 50, 0.4);
+
+  display: grid;
+  grid-template-areas:
+    "image image data data data data"
+    "university university university university university university";
+  grid-gap: 1rem;
+  .image {
+    grid-area: image;
+  }
+  .data {
+    grid-area: data;
+    width: 13rem;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+  }
+  .data p {
+    background-color: ${(props) => props.theme.colors.primary};
+    margin-bottom: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 0.7rem;
+  }
+  .university {
+    grid-area: university;
+    display: flex;
+  }
+`;
+export const ModalClose = styled(MdClose)`
+  cursor: pointer;
+  position:relative;
+  top: -250px;
+  right: -340px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  z-index: 10;
+`;
+export const AlertCard = styled.div`
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  width: 720px;
+  min-height: 5rem;
+
+  background-color: ${(props) =>
+    props.color === "error"
+      ? props.theme.colors.secondary
+      : props.color === "success"
+      ? props.theme.colors.primary
+      : props.theme.colors.inherit};
+  border-radius: 1.5rem;
+  padding: 1rem;
+  p {
+    font-size: 20px;
+    margin: 0 auto;
+    color: ${(props) =>
+      props.color
+        ? props.theme.colors.text.secondary
+        : props.theme.colors.text.primary};
+  }
+  align-items: center;
+  position: relative;
+  z-index: 2;
 `;
