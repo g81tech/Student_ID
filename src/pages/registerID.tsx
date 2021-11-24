@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import * as C from "../styles/pages.Styles";
-import {  useState } from "react";
+import { useState } from "react";
 import Alert from "../components/Alert";
 
 interface Form {
@@ -278,7 +278,7 @@ const Register: NextPage = () => {
       <C.FormRegister onSubmit={handleSubmit(registration)}>
         <h2 className="txt">INSIRA OS DADOS DE ACESSO AO SAGRES</h2>
         <div>
-        <p>&nbsp;&nbsp;&nbsp;MATRÍCULA:</p>
+          <p>&nbsp;&nbsp;&nbsp;MATRÍCULA:</p>
           <C.Input
             {...register("matriculation")}
             placeholder="Sua Matrícula"
@@ -288,7 +288,7 @@ const Register: NextPage = () => {
           />
         </div>
         <div>
-        <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
+          <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
           <C.Input
             {...register("password")}
             placeholder="Os 6 primeiros dígitos do CPF"

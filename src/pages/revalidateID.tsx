@@ -20,6 +20,9 @@ const Revalidate: NextPage = () => {
       <Head>
         <title>Revalidar | Carteirinha Estudantil | UNEB</title>
       </Head>
+      <C.TextCard>
+        <p>É NECESSÁRIO FAZER A REVALIDAÇÃO A CADA 6 MESES</p>
+      </C.TextCard>
       <Alert
         showAlert={showAlert}
         text={alertMessage}
@@ -27,14 +30,25 @@ const Revalidate: NextPage = () => {
         setShowAlert={setShowAlert}
       />
       <C.FormRegister>
-        <h2>REVALIDAÇÃO DA CARTEIRINHA</h2>
-        <C.Input
-          placeholder="Matrícula"
-          type="text"
-          name="matriculation"
-          required
-        />
-        <C.Input placeholder="Senha" type="password" name="password" required />
+        <h2 className="txt">REVALIDAÇÃO DA CARTEIRINHA</h2>
+        <div>
+          <p>&nbsp;&nbsp;&nbsp;MATRÍCULA:</p>
+          <C.Input
+            placeholder="Sua Matrícula"
+            type="text"
+            name="matriculation"
+            required
+          />
+        </div>
+        <div>
+          <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
+          <C.Input
+            placeholder="Os 6 primeiros dígitos do CPF"
+            type="password"
+            name="password"
+            required
+          />
+        </div>
         <C.Button
           color="primary"
           type="button"
