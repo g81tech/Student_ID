@@ -70,6 +70,30 @@ const students = [
     342423343,
     "https://github.com/jps198.png"
   ),
+  dataStudent(
+    "Paulo Henrique Miranda Lopes",
+    "Sistemas de Informação",
+    true,
+    "5º Semestre",
+    5235423343,
+    "https://github.com/Paulinho599.png"
+  ),
+  dataStudent(
+    "Gabriel Pinheiro",
+    "Sistemas de Informação",
+    true,
+    "5º Semestre",
+    4533343,
+    "https://github.com/pinheiiro.png"
+  ),
+  dataStudent(
+    "Adam Lima",
+    "Sistemas de Informação",
+    true,
+    "5º Semestre",
+    9935423343,
+    "https://github.com/Adamlima0.png"
+  ),
 ];
 
 // const Home: NextPage = () => {
@@ -78,16 +102,18 @@ const Home: NextPage<{ data: Data }> = (props) => {
     "https://portal.uneb.br/wp-content/themes/tema_padrao/inc/image/logo.png";
   const universityName = "Universidade do Estado da Bahia";
 
-  const [selectedFilterCourse, setSelectedFilterCourse] = useState({});
-  const [selectedFilterSemester, setSelectedFilterSemester] = useState({});
+  const [selectedFilterCourse, setSelectedFilterCourse] = useState("");
+  const [selectedFilterSemester, setSelectedFilterSemester] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalStudent, setModalStudent] = useState({});
 
   function parseSelected(event: any) {
     const valueToParse = event.target.value;
     const itemSelected = JSON.parse(valueToParse);
-    setSelectedFilterCourse(itemSelected);
-    setSelectedFilterSemester(itemSelected);
+    if(itemSelected.nameCourse)
+      setSelectedFilterCourse(itemSelected.nameCourse);
+    if(itemSelected.numberSemester)
+    setSelectedFilterSemester(itemSelected.numberSemester);
     return;
   }
   const openModal = (student: any) => {
@@ -126,14 +152,10 @@ const Home: NextPage<{ data: Data }> = (props) => {
           ))}
         </select>
       </C.Filter>
-      <p>Filtro curso: {selectedFilterCourse.nameCourse}</p>
-
-      <p>Filtro semestre: {selectedFilterSemester.numberSemester}</p>
       <C.ListID>
         {students.map((student, index) => (
           <div
             key={index}
-            type="button"
             onClick={() => openModal(student)}
             className="id"
           >
