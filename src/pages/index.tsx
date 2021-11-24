@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
+import { AnyAaaaRecord } from "dns";
 import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import Modal from "../components/Modal";
 
 import * as C from "../styles/pages.Styles";
 
@@ -78,6 +80,8 @@ const Home: NextPage<{ data: Data }> = (props) => {
 
   const [selectedFilterCourse, setSelectedFilterCourse] = useState({});
   const [selectedFilterSemester, setSelectedFilterSemester] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalStudent, setModalStudent] = useState({});
 
   function parseSelected(event: any) {
     const valueToParse = event.target.value;
@@ -86,13 +90,23 @@ const Home: NextPage<{ data: Data }> = (props) => {
     setSelectedFilterSemester(itemSelected);
     return;
   }
+  const openModal = (student: any) => {
+    setShowModal((prev) => !prev);
+    setModalStudent(student);
+  };
 
   return (
     <C.Container>
       <Head>
         <title>Carteirinha Estudantil | UNEB</title>
       </Head>
-
+      <Modal
+        student={modalStudent}
+        universityImage={universityImage}
+        universityName={universityName}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
       <C.Filter>
         <p style={{ color: "#fff" }}>Filtragem por curso</p>
         <select name="any" id="any" onChange={parseSelected}>
@@ -117,7 +131,12 @@ const Home: NextPage<{ data: Data }> = (props) => {
       <p>Filtro semestre: {selectedFilterSemester.numberSemester}</p>
       <C.ListID>
         {students.map((student, index) => (
-          <div key={index} className="id">
+          <div
+            key={index}
+            type="button"
+            onClick={() => openModal(student)}
+            className="id"
+          >
             <div className="image">
               <img
                 style={{

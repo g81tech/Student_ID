@@ -40,6 +40,7 @@ export const ListID = styled.div`
   grid-gap: 2rem;
 
   .id {
+    cursor: pointer;
     background-color: #ccc;
     background-image: linear-gradient(
       ${(props) => props.theme.colors.background},
@@ -119,7 +120,7 @@ export const FormRegister = styled.form`
     font-size: 20px;
   }
 `;
-export const NextFormRegister = styled.form`
+export const GridFormRegister = styled.form`
   display: grid;
   grid-template-columns: repeat(2, 2fr);
   grid-gap: 1.5rem;
