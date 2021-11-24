@@ -114,9 +114,8 @@ export const FormRegister = styled.form`
   grid-gap: 20px;
   width: 450px;
   margin: 0 auto;
-  h2 {
-    align-items: center;
-    margin: 0 auto;
+  .txt {
+    text-align: center;
     font-size: 20px;
   }
 `;
@@ -132,6 +131,7 @@ export const Input = styled.input`
   font-size: 20px;
   border-color: ${(props) => props.theme.colors.primary};
   border-style: solid;
+  width: 100%;
   border-radius: 1.5rem;
   padding: ${props => props.resource?props.resource:"14px 40px"};
   outline: none;
@@ -146,8 +146,9 @@ export const TextCard = styled.div`
   background: ${(props) => props.theme.colors.inherit};
   margin-bottom: 10px;
   border-radius: 1.5rem;
-  padding: 1rem;
-  text {
-    color: ${(props) => props.theme.colors.text.secondary};
+  padding: ${ props => props.resource? props.resource:"1.3rem"};
+  p {
+    color: ${(props) => props.theme.colors.text.primary};
+    text-align: justify;
   }
 `;

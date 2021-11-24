@@ -90,8 +90,8 @@ export const CardModal = styled.div`
     height: 25px;
     width: 25px;
     position: absolute;
-    top: 145px;
-    right:380px;
+    top: 175px;
+    right:440px;
     cursor: pointer;
   }
   .image {

@@ -1,11 +1,10 @@
-import { type } from "os";
-import React, { useState } from "react";
+import React from "react";
 import { MdClose } from "react-icons/md";
-import { AlertCard, Background } from "../styles/components.Styles";
+import { AlertCard } from "../styles/components.Styles";
+
 
 export default function Alert(props: any) {
   const { showAlert, setShowAlert, text, type } = props;
-
   return (
     <>
       {showAlert ? (
@@ -13,7 +12,7 @@ export default function Alert(props: any) {
           <p>{text.toUpperCase()}</p>
           <MdClose
             className="close"
-            onClick={() => setShowAlert((prev: any) => !prev)}
+            onClick={() => setShowAlert(false)}
           />
         </AlertCard>
       ) : null}

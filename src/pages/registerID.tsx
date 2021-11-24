@@ -1,11 +1,10 @@
 import type { NextPage } from "next";
-import Router from "next/router";
 
 import Head from "next/head";
-import { useForm, SubmitHandler, set } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import * as C from "../styles/pages.Styles";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Alert from "../components/Alert";
 
 interface Form {
@@ -37,7 +36,7 @@ const Register: NextPage = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(String);
 
-  const openAlert = (Message:string) => {
+  const openAlert = (Message: string) => {
     setShowAlert((prev) => !prev);
     setAlertMessage(Message);
   };
@@ -117,10 +116,12 @@ const Register: NextPage = () => {
               resource="14px 90px"
             />
           </div>
+
           <div>
             <C.Button type="submit" color="primary">
               SALVAR
             </C.Button>
+            &nbsp;&nbsp;&nbsp;
             <C.Button
               color="secondary"
               type="button"
@@ -239,6 +240,7 @@ const Register: NextPage = () => {
             <C.Button type="submit" color="primary">
               PRÓXIMO
             </C.Button>
+            &nbsp;&nbsp;&nbsp;
             <C.Button
               color="secondary"
               type="button"
@@ -267,25 +269,34 @@ const Register: NextPage = () => {
         <title>Cadastrar | Carteirinha Estudantil | UNEB</title>
       </Head>
       <C.TextCard>
-        <p>Informações que vem aqui</p>
+        <p>
+          OLÁ ESTUDANTE, INFORME SUA MATRÍCULA E SENHA DO SAGRES PARA VALIDAR
+          SEUS DADOS E PROSSEGUIRMOS COM O CADASTRO!
+        </p>
       </C.TextCard>
 
       <C.FormRegister onSubmit={handleSubmit(registration)}>
-        <h2>INSIRA OS DADOS DE ACESSO AO SAGRES</h2>
-        <C.Input
-          {...register("matriculation")}
-          placeholder="Matrícula"
-          type="text"
-          name="matriculation"
-          required
-        />
-        <C.Input
-          {...register("password")}
-          placeholder="Senha"
-          type="password"
-          name="password"
-          required
-        />
+        <h2 className="txt">INSIRA OS DADOS DE ACESSO AO SAGRES</h2>
+        <div>
+        <p>&nbsp;&nbsp;&nbsp;MATRÍCULA:</p>
+          <C.Input
+            {...register("matriculation")}
+            placeholder="Sua Matrícula"
+            type="text"
+            name="matriculation"
+            required
+          />
+        </div>
+        <div>
+        <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
+          <C.Input
+            {...register("password")}
+            placeholder="Os 6 primeiros dígitos do CPF"
+            type="password"
+            name="password"
+            required
+          />
+        </div>
         <C.Button color="primary" type="submit">
           VALIDAR
         </C.Button>

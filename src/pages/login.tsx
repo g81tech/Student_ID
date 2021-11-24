@@ -66,4 +66,4 @@ const Login: NextPage = () => {
     </C.Container>
   )
 }
-export default Login
+export default Login;
