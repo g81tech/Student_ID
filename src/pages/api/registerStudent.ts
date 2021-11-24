@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import User from '../../models/user'
+import Student from '../../../db/models/student' 
 import * as bcrypt from 'bcrypt';
 
 
@@ -12,21 +12,40 @@ const registerStudent = async(req: NextApiRequest, res: NextApiResponse) => {
 }
 
 async function register(req: NextApiRequest, res: NextApiResponse) {
-    let dados = req.body;
-    dados.senha = await bcrypt.hash(dados.senha, 8);
+    let data = req.body;
+    /*return res.status(200).json({
+        success: true,
+        messagem: "Estudante cadastrado com sucesso!",
+        data
+    })*/
+    //data.password = await bcrypt.hash(data.password, 8);
+    const studentCheck = await Student.findOne ({
+        where: {
+            codeStudent: data.codeStudent
+        }
+    })
 
-    await User.create(dados).then(function () {
-        return res.json({
-            erro: false,
-            messagem: "Usuário cadastrado com sucesso!"
-        });
-    }).catch(function () {
-        return res.json({
-            erro: true,
-            messagem: "Erro: Usuário não cadastrado com sucesso!"
-        });
-    });
+    if (studentCheck)
+    {
+       return res.status(401).json({
+            success: false,
+            messagem: "Estudante já cadastrado!"
+        })
+    }
 
+    await Student.create(data)
+    .then(()=> {
+        return res.status(200).json({
+            success: true,
+            messagem: "Estudante cadastrado com sucesso!"
+        })
+    })
+    .catch(()=> {
+        return res.status(400).json({
+            success: false,
+            messagem: "Erro ao cadastrar estudante!"
+        })
+    })
 }
 
 export default registerStudent

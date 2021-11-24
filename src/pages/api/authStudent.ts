@@ -17,7 +17,8 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
   const pagePrimary =
     "http://www.portalacademico.uneb.br/PortalSagres/Acesso.aspx";
   const pageSecundary =
-    "http://www.portalacademico.uneb.br/PortalSagres/Modules/Diario/Aluno/Relatorio/HistoricoEscolar.aspx";
+  "http://www.portalacademico.uneb.br/PortalSagres/Modules/Portal/Default.aspx";
+    //"http://www.portalacademico.uneb.br/PortalSagres/Modules/Diario/Aluno/Relatorio/HistoricoEscolar.aspx";
   //http://www.portalacademico.uneb.br/PortalSagres/Modules/Diario/Aluno/Relatorio/ComprovanteMatricula.aspx
 
   const { matriculation, password } = req.body;
@@ -25,7 +26,7 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
   let browser;
   
   browser = await puppeteer.launch({
-      headless: false, //false abre interface gráfica true não abre.
+      headless: true, //false abre interface gráfica true não abre.
       defaultViewport: null, //Tira o tamanho padrão 800x600
       args: ["--disable-setuid-sandbox", "--start-maximized"], //permite que seja uma página http e página maximizada
       ignoreHTTPSErrors: true,
@@ -40,8 +41,10 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
     );
     await page.type("#ctl00_PageContent_LoginPanel_Password", `${password}`);
     await page.click('[type="submit"]');
+    await page.waitForNavigation(); //Espera o carregamento da pági
+    await page.click('[name="ctl00$btnLogin"]');//ctl00$btnLogin Se houver algum comunicado na página
+    //await page.goto(`${pageSecundary}`); //Página secundária desabilitada pois só pegaremos o nome até o momento
     await page.waitForNavigation(); //Espera o carregamento da página
-    // await page.goto(`${pageSecundary}`); //Página secundária desabilitada pois só pegaremos o nome até o momento
     const list = await page.evaluate(() => {
       // Aqui dentro executará toda DOM do javascript
       return {
