@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { Background, CardModal, ModalClose } from "../styles/components.Styles";
+import { MdClose } from "react-icons/md";
+import { Background, CardModal } from "../styles/components.Styles";
 
 export default function Modal(props: any) {
   const { student, universityImage, universityName, showModal, setShowModal } =
@@ -10,8 +11,11 @@ export default function Modal(props: any) {
     <>
       {showModal ? (
         <Background>
-          <CardModal onClick={() => setShowModal((prev) => !prev)}>
-            <ModalClose />
+          <CardModal>
+            <MdClose
+              className="close"
+              onClick={() => setShowModal((prev: any) => !prev)}
+            />
             <div className="image">
               <img
                 style={{

@@ -35,9 +35,11 @@ const Register: NextPage = () => {
   const [ok, setOk] = useState(false);
   const [configPass, setConfigPass] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(String);
 
-  const openAlert = () => {
+  const openAlert = (Message:string) => {
     setShowAlert((prev) => !prev);
+    setAlertMessage(Message);
   };
 
   const registration: SubmitHandler<Form> = async (data) => {
@@ -59,9 +61,9 @@ const Register: NextPage = () => {
       setName(result.name);
       reset(result);
     } else if (res.status === 500) {
-      console.log("Erro nos dados informados.");
+      openAlert("Erro nos dados informados");
     } else if (res.status === 404) {
-      console.log("404 erro");
+      openAlert("Erro no servidor!");
       //Router.push({pathname: '/myID', query: { nome: posp }});
       //Router.push("/myID");
     }
@@ -73,7 +75,7 @@ const Register: NextPage = () => {
     if (data.checkPassword === data.password) {
       console.log(data);
     } else {
-      console.log("senhas divergentes");
+      openAlert("Senhas Divergentes");
     }
   };
   const onRegister: SubmitHandler<NextForm> = async (data) => {
@@ -254,21 +256,20 @@ const Register: NextPage = () => {
     );
   }
   return (
-    <>
-    <Alert
+    <C.Container>
+      <Alert
         showAlert={showAlert}
-        text="testando"
-        type="success"
+        text={alertMessage}
+        type="error"
         setShowAlert={setShowAlert}
       />
-    <C.Container>
       <Head>
         <title>Cadastrar | Carteirinha Estudantil | UNEB</title>
       </Head>
       <C.TextCard>
         <p>Informações que vem aqui</p>
       </C.TextCard>
-      
+
       <C.FormRegister onSubmit={handleSubmit(registration)}>
         <h2>INSIRA OS DADOS DE ACESSO AO SAGRES</h2>
         <C.Input
@@ -286,14 +287,10 @@ const Register: NextPage = () => {
           required
         />
         <C.Button color="primary" type="submit">
-          Validar
-        </C.Button>
-        <C.Button color="primary" type="button" onClick={openAlert}>
-          TESTE
+          VALIDAR
         </C.Button>
       </C.FormRegister>
     </C.Container>
-    </>
   );
 };
 

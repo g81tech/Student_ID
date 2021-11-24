@@ -1,5 +1,6 @@
 import { type } from "os";
 import React, { useState } from "react";
+import { MdClose } from "react-icons/md";
 import { AlertCard, Background } from "../styles/components.Styles";
 
 export default function Alert(props: any) {
@@ -8,9 +9,13 @@ export default function Alert(props: any) {
   return (
     <>
       {showAlert ? (
-          <AlertCard color={type}>
-            <p>{text}</p>
-          </AlertCard>  
+        <AlertCard color={type}>
+          <p>{text.toUpperCase()}</p>
+          <MdClose
+            className="close"
+            onClick={() => setShowAlert((prev: any) => !prev)}
+          />
+        </AlertCard>
       ) : null}
     </>
   );

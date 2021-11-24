@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { MdClose } from "react-icons/md";
 export const Nav = styled.div`
   width: 100%;
-
+  
   .CE {
     width: 13rem;
     height: auto;
@@ -60,23 +59,25 @@ export const Menu = styled.div`
 
 export const Background = styled.div`
   background: rgba(0, 0, 0, 0.7);
-  width: 100%;
-  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   position: fixed;
   display: flex;
-  left: 250px;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 `;
 export const CardModal = styled.div`
-  width: 400px;
+  width: 500px;
   background-color: #ccc;
   background-image: linear-gradient(
     ${(props) => props.theme.colors.background},
     ${(props) => props.theme.colors.text.secondary}
   );
   border-radius: 1.5rem;
-  padding: 1.5rem;
+  padding: 3rem;
   border: solid 0.2rem ${(props) => props.theme.colors.primary};
   box-shadow: 0 0 0.5rem rgba(50, 50, 50, 0.4);
 
@@ -85,6 +86,14 @@ export const CardModal = styled.div`
     "image image data data data data"
     "university university university university university university";
   grid-gap: 1rem;
+  .close{
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    top: 145px;
+    right:380px;
+    cursor: pointer;
+  }
   .image {
     grid-area: image;
   }
@@ -106,22 +115,17 @@ export const CardModal = styled.div`
     display: flex;
   }
 `;
-export const ModalClose = styled(MdClose)`
-  cursor: pointer;
-  position:relative;
-  top: -250px;
-  right: -340px;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  z-index: 10;
-`;
 export const AlertCard = styled.div`
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   display: flex;
-  width: 720px;
+  width: 750px;
+  margin-top: 100px;
+  margin-left: 200px;
   min-height: 5rem;
-
+  position: fixed;
+  display: flex;
+  z-index: 1;
+  align-items: center;
   background-color: ${(props) =>
     props.color === "error"
       ? props.theme.colors.secondary
@@ -138,7 +142,9 @@ export const AlertCard = styled.div`
         ? props.theme.colors.text.secondary
         : props.theme.colors.text.primary};
   }
-  align-items: center;
-  position: relative;
-  z-index: 2;
+  .close {
+   color: white;
+   height: 30px;
+   width: 30px;
+  }
 `;
