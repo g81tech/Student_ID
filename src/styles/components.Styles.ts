@@ -77,23 +77,16 @@ export const CardModal = styled.div`
     ${(props) => props.theme.colors.text.secondary}
   );
   border-radius: 1.5rem;
-  padding: 3rem;
+  padding: 1.3rem;
   border: solid 0.2rem ${(props) => props.theme.colors.primary};
   box-shadow: 0 0 0.5rem rgba(50, 50, 50, 0.4);
 
   display: grid;
   grid-template-areas:
-    "image image data data data data"
+    "image image  data data data close"
     "university university university university university university";
   grid-gap: 1rem;
-  .close{
-    height: 25px;
-    width: 25px;
-    position: absolute;
-    top: 175px;
-    right:440px;
-    cursor: pointer;
-  }
+ 
   .image {
     grid-area: image;
   }
@@ -113,6 +106,14 @@ export const CardModal = styled.div`
   .university {
     grid-area: university;
     display: flex;
+  }
+  .close{
+    grid-area: close;
+    position: relative;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    margin-left: 20px;
   }
 `;
 export const AlertCard = styled.div`

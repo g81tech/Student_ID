@@ -26,14 +26,14 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
   let browser;
   
   browser = await puppeteer.launch({
-      headless: false, //false abre interface gráfica true não abre.
+      headless: true, //false abre interface gráfica true não abre.
       defaultViewport: null, //Tira o tamanho padrão 800x600
       args: ["--disable-setuid-sandbox", "--start-maximized"], //permite que seja uma página http e página maximizada
       ignoreHTTPSErrors: true,
     });
   try {
     const page = await browser.newPage();
-    await page.goto(`${pagePrimary}`, {timeout: 10000});
+    await page.goto(`${pagePrimary}`, {timeout: 4000});
     //O puppeter insere os dados de matrícula e senha nos campos e envia
     await page.type(
       '[name="ctl00$PageContent$LoginPanel$UserName"]',
@@ -44,7 +44,7 @@ async function checkInfoStudents(req: NextApiRequest, res: NextApiResponse) {
     await page.waitForNavigation(); //Espera o carregamento da pági
     //await page.click('[name="ctl00$btnLogin"]');//ctl00$btnLogin Se houver algum comunicado na página
     //await page.goto(`${pageSecundary}`); //Página secundária desabilitada pois só pegaremos o nome até o momento
-    //await page.waitForNavigation(); //Espera o carregamento da página
+    await page.waitForNavigation(); //Espera o carregamento da página
     const list = await page.evaluate(() => {
       // Aqui dentro executará toda DOM do javascript
       return {
