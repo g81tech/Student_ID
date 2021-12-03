@@ -1,4 +1,8 @@
 import type { NextPage } from "next";
+import moment from "moment";
+import 'moment/locale/pt-br';
+import { v4 as uuidv4 } from 'uuid';
+
 
 import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,26 +17,29 @@ interface Form {
 }
 
 interface NextForm {
+  idStudent:string;
+  codeStudent:string;
   name: string;
   course: string;
   semester: string;
   cpf: string;
   rg: string;
+  sex: string,
   birthDate: string;
   photo: string;
   curriculum: string;
   linkedin: string;
-}
-interface PassForm {
   password: string;
-  checkPassword: string;
+  dateRegister: moment.Moment;
+  dateRevalidate: moment.Moment;
 }
+
+moment.locale('pt-br');
 
 const Register: NextPage = () => {
   const { register, handleSubmit, reset } = useForm();
   const [name, setName] = useState(String);
   const [ok, setOk] = useState(false);
-  const [configPass, setConfigPass] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(String);
 
@@ -63,81 +70,29 @@ const Register: NextPage = () => {
       openAlert("Erro nos dados informados");
     } else if (res.status === 404) {
       openAlert("Erro no servidor!");
-      //Router.push({pathname: '/myID', query: { nome: posp }});
-      //Router.push("/myID");
     }
+  };
 
-    //Chamada postar no banco de dados #ParaFazer
-    //  postDB(result)
-  };
-  const onPassword: SubmitHandler<PassForm> = async (data) => {
-    if (data.checkPassword === data.password) {
-      console.log(data);
-    } else {
-      openAlert("Senhas Divergentes");
-    }
-  };
+  
   const onRegister: SubmitHandler<NextForm> = async (data) => {
-    console.log(data);
-    setOk(false);
-    setConfigPass(true);
-    reset(data);
+    reset(data)
+    data.codeStudent= uuidv4();
+    data.dateRegister = moment()
+    data.dateRevalidate = moment().add(170, 'days')
+
+    const res = await fetch("/api/registerStudent", {
+        body: JSON.stringify({
+          ...data
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+      const result = await res.json();
+      console.log(result)
   };
 
-  if (configPass) {
-    return (
-      <C.Container>
-        <Head>
-          <title>Cadastrar | Carteirinha Estudantil | UNEB</title>
-        </Head>
-        <C.TextCard>
-          <p>INFORME NOVA SENHA E USUÁRIO</p>
-        </C.TextCard>
-        <C.GridFormRegister onSubmit={handleSubmit(onPassword)}>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
-            <C.Input
-              required
-              {...register("password")}
-              type="password"
-              id="password"
-              name="password"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;CONFIRME A SENHA:</p>
-            <C.Input
-              required
-              {...register("checkPassword")}
-              type="password"
-              id="checkPassword"
-              name="checkPassword"
-              resource="14px 90px"
-            />
-          </div>
-
-          <div>
-            <C.Button type="submit" color="primary">
-              SALVAR
-            </C.Button>
-            &nbsp;&nbsp;&nbsp;
-            <C.Button
-              color="secondary"
-              type="button"
-              onClick={() => {
-                setConfigPass(false);
-                reset({});
-                setName("");
-              }}
-            >
-              CANCELAR
-            </C.Button>
-          </div>
-        </C.GridFormRegister>
-      </C.Container>
-    );
-  }
   if (ok) {
     return (
       <C.Container>
@@ -152,6 +107,7 @@ const Register: NextPage = () => {
         </C.TextCard>
         <C.GridFormRegister onSubmit={handleSubmit(onRegister)}>
           <div>
+
             <p>&nbsp;&nbsp;&nbsp;CURSO:</p>
             <C.Input
               required
@@ -207,12 +163,12 @@ const Register: NextPage = () => {
             />
           </div>
           <div>
-            <p>&nbsp;&nbsp;&nbsp;FOTO:</p>
+            <p>&nbsp;&nbsp;&nbsp;SEXO:</p>
             <C.Input
-              {...register("photo")}
+              {...register("sex")}
               type="text"
-              id="photo"
-              name="photo"
+              id="sex"
+              name="sex"
               resource="14px 90px"
             />
           </div>
@@ -237,22 +193,44 @@ const Register: NextPage = () => {
             />
           </div>
           <div>
-            <C.Button type="submit" color="primary">
-              PRÓXIMO
+            <p>&nbsp;&nbsp;&nbsp;FOTO:</p>
+            <C.Input
+              {...register("photo")}
+              type="text"
+              id="photo"
+              name="photo"
+              resource="14px 90px"
+              placeholder="Insira o link da foto"
+            />
+          </div>
+          
+          <div>
+            <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
+            <C.Input
+              required
+              {...register("password")}
+              type="password"
+              id="password"
+              name="password"
+              resource="14px 90px"
+            />
+          </div>
+          
+          <C.Button type="submit" color="primary">
+              CADASTRAR
             </C.Button>
-            &nbsp;&nbsp;&nbsp;
+            
             <C.Button
               color="secondary"
               type="button"
               onClick={() => {
                 setOk(false);
                 setName("");
-                reset({});
               }}
             >
-              VOLTAR
+              CANCELAR
             </C.Button>
-          </div>
+            
         </C.GridFormRegister>
       </C.Container>
     );

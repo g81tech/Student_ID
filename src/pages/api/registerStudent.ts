@@ -1,39 +1,41 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Student from '../../../db/models/student' 
+import {StudentCheckModel} from '../../db/models/StudentCheckModel'
 import * as bcrypt from 'bcrypt';
+import { db } from "../../db/config";
 
 
 const registerStudent = async(req: NextApiRequest, res: NextApiResponse) => {
+    
     switch (req.method) {
     case "POST": {
-      return register(req, res);
+      return registryID(req, res);
     }
+    case "GET": {
+        return getRegistryID(req, res);
+      }
   }
 }
 
-async function register(req: NextApiRequest, res: NextApiResponse) {
-    let data = req.body;
-    /*return res.status(200).json({
-        success: true,
-        messagem: "Estudante cadastrado com sucesso!",
-        data
-    })*/
-    //data.password = await bcrypt.hash(data.password, 8);
-    const studentCheck = await Student.findOne ({
+async function registryID(req: NextApiRequest, res: NextApiResponse) {
+    await db.sync(); //Sincronizar tabelas do banco de dados
+    const data = req.body;
+    data.password = await bcrypt.hash(data.password, 8);
+    const studentCheck = await StudentCheckModel.findOne ({
         where: {
-            codeStudent: data.codeStudent
+            codeStudent: data.codeStudent,
+            cpf: data.cpf
         }
     })
 
     if (studentCheck)
     {
-       return res.status(401).json({
+       return res.status(501).json({
             success: false,
             messagem: "Estudante já cadastrado!"
         })
     }
 
-    await Student.create(data)
+    await StudentCheckModel.create(data) //Cadastrar os dados vindos do frontend no banco de dados
     .then(()=> {
         return res.status(200).json({
             success: true,
@@ -46,6 +48,13 @@ async function register(req: NextApiRequest, res: NextApiResponse) {
             messagem: "Erro ao cadastrar estudante!"
         })
     })
+}
+
+async function getRegistryID(req: NextApiRequest, res: NextApiResponse) {
+    const allStudentIDs = await StudentCheckModel.findAll();
+    return allStudentIDs.length > 0
+    ? res.status(200).json(allStudentIDs)
+    : res.status(204).json({success: false, mensagem: 'Não há estudantes cadastrados!'});
 }
 
 export default registerStudent

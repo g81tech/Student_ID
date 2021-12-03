@@ -81,6 +81,8 @@ export const ListID = styled.div`
 `;
 
 export const Button = styled.button`
+  cursor: pointer;
+  margin: 2rem 2rem 0 0;
   background-color: ${(props) =>
     props.color === "primary"
       ? props.theme.colors.primary

@@ -35,69 +35,10 @@ const semester = [
   { numberSemester: "11", key: 11 },
   { numberSemester: "12", key: 12 },
 ];
-function dataStudent(
-  name: string,
-  courseStudent: string,
-  status: boolean,
-  semester: string,
-  code: number,
-  image: string
-) {
-  return { name, courseStudent, status, semester, code, image };
-}
-const students = [
-  dataStudent(
-    "Gabriel Silva da Cruz",
-    "Sistemas de Informação",
-    true,
-    "5º Semestre",
-    789562216,
-    "https://github.com/Gabrielg81.png"
-  ),
-  dataStudent(
-    "Alex Silva",
-    "Sistemas de Informação",
-    true,
-    "5º Semestre",
-    45566565,
-    "https://github.com/leksansilva.png"
-  ),
-  dataStudent(
-    "João Paulo",
-    "Sistemas de Informação",
-    true,
-    "5º Semestre",
-    342423343,
-    "https://github.com/jps198.png"
-  ),
-  dataStudent(
-    "Paulo Henrique Miranda Lopes",
-    "Sistemas de Informação",
-    true,
-    "5º Semestre",
-    5235423343,
-    "https://github.com/Paulinho599.png"
-  ),
-  dataStudent(
-    "Gabriel Pinheiro",
-    "Sistemas de Informação",
-    true,
-    "5º Semestre",
-    4533343,
-    "https://github.com/pinheiiro.png"
-  ),
-  dataStudent(
-    "Adam Lima",
-    "Sistemas de Informação",
-    true,
-    "5º Semestre",
-    9935423343,
-    "https://github.com/Adamlima0.png"
-  ),
-];
 
 // const Home: NextPage = () => {
-const Home: NextPage<{ data: Data }> = (props) => {
+const Home:NextPage = ({ result }:any) => {
+  console.log(result)
   const universityImage =
     "https://portal.uneb.br/wp-content/themes/tema_padrao/inc/image/logo.png";
   const universityName = "Universidade do Estado da Bahia";
@@ -153,10 +94,10 @@ const Home: NextPage<{ data: Data }> = (props) => {
         </select>
       </C.Filter>
       <C.ListID>
-        {students.map((student, index) => (
+        {result.map((result:any) => (
           <div
-            key={index}
-            onClick={() => openModal(student)}
+            key={result.idStudent}
+            onClick={() => openModal(result)}
             className="id"
           >
             <div className="image">
@@ -167,15 +108,16 @@ const Home: NextPage<{ data: Data }> = (props) => {
                   borderRadius: "1rem",
                   border: "0.2rem solid #009774",
                 }}
-                src={student.image}
+                alt={result.name}
+                src={result.photo} 
               />
             </div>
             <div className="data">
-              <p>{student.name}</p>
-              <p>{student.courseStudent}</p>
-              <p>{student.status ? "Ativo" : "Inativo"}</p>
-              <p>{student.semester}</p>
-              <p>{student.code}</p>
+              <p>{result.name.toUpperCase()}</p>
+              <p>{result.courseStudent}</p>
+              <p>{result.status ? "Ativo" : "Inativo"}</p>
+              <p>{result.semester}</p>
+              <p>{result.codeStudent}</p>
             </div>
             <div className="university">
               <img style={{ width: "5rem" }} src={universityImage} />
@@ -197,20 +139,15 @@ const Home: NextPage<{ data: Data }> = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  try {
-    const result = await fetch(`http://localhost:3000/api/authStudent`);
-    const data = await result.json();
-    console.log("isso " + data.result);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
+    const res = await fetch("http://localhost:3000/api/registerStudent");
+    const result:any = await res.json();
     return {
-      props: { data },
-    };
-  } catch {
-    res.statusCode = 404;
-    return {
-      props: { message: "erro" },
-    };
-  }
-};
+      props:  {
+        result,
+      },
+    }
+}
 
 export default Home;
