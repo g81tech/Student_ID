@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 export const Container = styled.div`
   width: 80vw;
   max-width: 85rem;
@@ -24,12 +24,11 @@ export const Filter = styled.div`
   }
   select {
     padding: 10px;
-    border-radius : 0.7rem;
+    border-radius: 0.7rem;
     margin-right: 2rem;
     border: none;
     outline: 0px;
     font-size: 15px;
-    
   }
 `;
 
@@ -82,7 +81,7 @@ export const ListID = styled.div`
 
 export const Button = styled.button`
   cursor: pointer;
-  margin: 2rem 2rem 0 0;
+  margin: 0;
   background-color: ${(props) =>
     props.color === "primary"
       ? props.theme.colors.primary
@@ -126,8 +125,6 @@ export const GridFormRegister = styled.form`
   grid-template-columns: repeat(2, 2fr);
   grid-gap: 1.5rem;
   width: 900px;
-  
-  
 `;
 export const Input = styled.input`
   font-size: 20px;
@@ -135,10 +132,10 @@ export const Input = styled.input`
   border-style: solid;
   width: 100%;
   border-radius: 1.5rem;
-  padding: ${props => props.resource?props.resource:"14px 40px"};
+  padding: ${(props) => (props.resource ? props.resource : "14px 40px")};
   outline: none;
   transition: 0.5s;
-  :focus{
+  :focus {
     border-color: ${(props) => props.theme.colors.tertiary};
   }
 `;
@@ -148,9 +145,11 @@ export const TextCard = styled.div`
   background: ${(props) => props.theme.colors.inherit};
   margin-bottom: 10px;
   border-radius: 1.5rem;
-  padding: ${ props => props.resource? props.resource:"1.3rem"};
+  padding: ${(props) => (props.resource ? props.resource : "1.3rem")};
   p {
     color: ${(props) => props.theme.colors.text.primary};
     text-align: justify;
   }
 `;
+
+
