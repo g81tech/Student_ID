@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { v4 as uuidv4 } from "uuid";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import React from "react";
 
 import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -44,7 +44,7 @@ const Register: NextPage = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(String);
   const [loading, setLoading] = useState(false);
-
+  const [cpf, setCpf] = useState(String);
   const openAlert = (Message: string) => {
     setShowAlert((prev) => !prev);
     setAlertMessage(Message);
@@ -64,17 +64,14 @@ const Register: NextPage = () => {
       method: "POST",
     });
     const result = await res.json();
+    setLoading(false);
     if (result.name != undefined) {
-      setLoading(false);
       setOk(true);
       setName(result.name);
       reset(result);
-     
     } else if (res.status === 500) {
-      setLoading(false);
       openAlert("Erro nos dados informados");
     } else if (res.status === 404 || res.status === 400) {
-      setLoading(false);
       openAlert("Erro no servidor!");
     }
   };
@@ -97,198 +94,214 @@ const Register: NextPage = () => {
     const result = await res.json();
     console.log(result);
   };
-  if (loading) {
-    return (
-      <C.Container>
-        <LoadingScreen/>
-      </C.Container>
+  const cpfMask = (value: any) => {
+    setCpf(
+      value
+        .replace(/\D/g, "")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+        .replace(/(-\d{2})\d+?$/, "$1")
     );
-  }
-
+  };
   if (ok) {
     return (
       <C.Container>
         <Head>
           <title>Cadastrar | Carteirinha Estudantil | UNEB</title>
         </Head>
-        <C.TextCard>
-          <p>
-            SEJA BEM VINDO(A) {name.toUpperCase()} SUA CONTA ESTARÁ ATIVA APÓS O
-            PREENCHIMENTO DAS INFORMAÇÕES;
-          </p>
-        </C.TextCard>
-        <C.GridFormRegister onSubmit={handleSubmit(onRegister)}>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;CURSO:</p>
-            <C.Input
-              required
-              {...register("course")}
-              type="text"
-              id="course"
-              name="course"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;SEMESTRE:</p>
-            <C.Input
-              required
-              {...register("semester")}
-              type="text"
-              id="semester"
-              name="semester"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;CPF:</p>
-            <C.Input
-              required
-              {...register("cpf")}
-              type="text"
-              id="cpf"
-              name="cpf"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;RG:</p>
-            <C.Input
-              required
-              {...register("rg")}
-              type="text"
-              id="rg"
-              name="rg"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;DATA DE NASCIMENTO:</p>
-            <C.Input
-              required
-              {...register("birthDate")}
-              type="text"
-              id="birthDate"
-              name="birthDate"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;SEXO:</p>
-            <C.Input
-              {...register("sex")}
-              type="text"
-              id="sex"
-              name="sex"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;C.LATTES:</p>
-            <C.Input
-              {...register("curriculum")}
-              type="text"
-              id="curriculum"
-              name="curriculum"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;LINKEDIN:</p>
-            <C.Input
-              {...register("linkedin")}
-              type="text"
-              id="linkedin"
-              name="linkedin"
-              resource="14px 90px"
-            />
-          </div>
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;FOTO:</p>
-            <C.Input
-              {...register("photo")}
-              type="text"
-              id="photo"
-              name="photo"
-              resource="14px 90px"
-              placeholder="Insira o link da foto"
-            />
-          </div>
+        {!loading ? (
+          <>
+            <C.TextCard>
+              <p>
+                SEJA BEM VINDO(A) {name.toUpperCase()} SUA CONTA ESTARÁ ATIVA
+                APÓS O PREENCHIMENTO DAS INFORMAÇÕES;
+              </p>
+            </C.TextCard>
+            <C.GridFormRegister onSubmit={handleSubmit(onRegister)}>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;CURSO:</p>
+                <C.Input
+                  required
+                  {...register("course")}
+                  type="text"
+                  id="course"
+                  name="course"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;SEMESTRE:</p>
+                <C.Input
+                  required
+                  {...register("semester")}
+                  type="text"
+                  id="semester"
+                  name="semester"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;CPF:</p>
+                <C.Input
+                  required
+                  {...register("cpf")}
+                  onChange={(ev) => cpfMask(ev.target.value)}
+                  value={cpf}
+                  type="text"
+                  id="cpf"
+                  name="cpf"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;RG:</p>
+                <C.Input
+                  required
+                  {...register("rg")}
+                  type="text"
+                  id="rg"
+                  name="rg"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;DATA DE NASCIMENTO:</p>
+                <C.Input
+                  required
+                  {...register("birthDate")}
+                  type="text"
+                  id="birthDate"
+                  name="birthDate"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;SEXO:</p>
+                <C.Input
+                  {...register("sex")}
+                  type="text"
+                  id="sex"
+                  name="sex"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;C.LATTES:</p>
+                <C.Input
+                  {...register("curriculum")}
+                  type="text"
+                  id="curriculum"
+                  name="curriculum"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;LINKEDIN:</p>
+                <C.Input
+                  {...register("linkedin")}
+                  type="text"
+                  id="linkedin"
+                  name="linkedin"
+                  resource="14px 90px"
+                />
+              </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;FOTO:</p>
+                <C.Input
+                  {...register("photo")}
+                  type="text"
+                  id="photo"
+                  name="photo"
+                  resource="14px 90px"
+                  placeholder="Insira o link da foto"
+                />
+              </div>
 
-          <div>
-            <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
-            <C.Input
-              required
-              {...register("password")}
-              type="password"
-              id="password"
-              name="password"
-              resource="14px 90px"
-            />
-          </div>
+              <div>
+                <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
+                <C.Input
+                  required
+                  {...register("password")}
+                  type="password"
+                  id="password"
+                  name="password"
+                  resource="14px 90px"
+                />
+              </div>
 
-          <C.Button type="submit" color="primary">
-            CADASTRAR
-          </C.Button>
+              <C.Button type="submit" color="primary">
+                CADASTRAR
+              </C.Button>
 
-          <C.Button
-            color="secondary"
-            type="button"
-            onClick={() => {
-              setOk(false);
-              setName("");
-            }}
-          >
-            CANCELAR
-          </C.Button>
-        </C.GridFormRegister>
+              <C.Button
+                color="secondary"
+                type="button"
+                onClick={() => {
+                  setOk(false);
+                  setName("");
+                }}
+              >
+                CANCELAR
+              </C.Button>
+            </C.GridFormRegister>
+          </>
+        ) : (
+          <LoadingScreen />
+        )}
       </C.Container>
     );
   }
   return (
     <C.Container>
-      <Alert
-        showAlert={showAlert}
-        text={alertMessage}
-        type="error"
-        setShowAlert={setShowAlert}
-      />
-      <Head>
-        <title>Cadastrar | Carteirinha Estudantil | UNEB</title>
-      </Head>
-      <C.TextCard>
-        <p>
-          OLÁ ESTUDANTE, INFORME SUA MATRÍCULA E SENHA DO SAGRES PARA VALIDAR
-          SEUS DADOS E PROSSEGUIRMOS COM O CADASTRO!
-        </p>
-      </C.TextCard>
+      {!loading ? (
+        <>
+          <Alert
+            showAlert={showAlert}
+            text={alertMessage}
+            type="error"
+            setShowAlert={setShowAlert}
+          />
+          <Head>
+            <title>Cadastrar | Carteirinha Estudantil | UNEB</title>
+          </Head>
+          <C.TextCard>
+            <p>
+              OLÁ ESTUDANTE, INFORME SUA MATRÍCULA E SENHA DO SAGRES PARA
+              VALIDAR SEUS DADOS E PROSSEGUIRMOS COM O CADASTRO!
+            </p>
+          </C.TextCard>
 
-      <C.FormRegister onSubmit={handleSubmit(registration)}>
-        <h2 className="txt">INSIRA OS DADOS DE ACESSO AO SAGRES</h2>
-        <div>
-          <p>&nbsp;&nbsp;&nbsp;MATRÍCULA:</p>
-          <C.Input
-            {...register("matriculation")}
-            placeholder="Sua Matrícula"
-            type="text"
-            name="matriculation"
-            required
-          />
-        </div>
-        <div>
-          <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
-          <C.Input
-            {...register("password")}
-            placeholder="Os 6 primeiros dígitos do CPF"
-            type="password"
-            name="password"
-            required
-          />
-        </div>
-        <C.Button color="primary" type="submit">
-          VALIDAR
-        </C.Button>
-      </C.FormRegister>
+          <C.FormRegister onSubmit={handleSubmit(registration)}>
+            <h2 className="txt">INSIRA OS DADOS DE ACESSO AO SAGRES</h2>
+            <div>
+              <p>&nbsp;&nbsp;&nbsp;MATRÍCULA:</p>
+              <C.Input
+                {...register("matriculation")}
+                placeholder="Sua Matrícula"
+                type="text"
+                name="matriculation"
+                required
+              />
+            </div>
+            <div>
+              <p>&nbsp;&nbsp;&nbsp;SENHA:</p>
+              <C.Input
+                {...register("password")}
+                placeholder="Os 6 primeiros dígitos do CPF"
+                type="password"
+                name="password"
+                required
+              />
+            </div>
+            <C.Button color="primary" type="submit">
+              VALIDAR
+            </C.Button>
+          </C.FormRegister>
+        </>
+      ) : (
+        <LoadingScreen />
+      )}
     </C.Container>
   );
 };

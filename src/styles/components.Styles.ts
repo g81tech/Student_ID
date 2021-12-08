@@ -150,7 +150,7 @@ export const AlertCard = styled.div`
   }
 `;
 export const Loading = styled.div`
-  margin-top: 150px;
+  margin-top: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
