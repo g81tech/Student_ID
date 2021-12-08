@@ -53,7 +53,7 @@ const Register: NextPage = () => {
   const registration: SubmitHandler<Form> = async (data) => {
     //Chamada a API para checar se a matricula está ok
     setLoading(true);
-    const res = await fetch("/api/authStudent", {
+    const res = await fetch("https://carteirinhauneb-c4h8tw2cr-g81.vercel.app/api/authStudent", {
       body: JSON.stringify({
         matriculation: data.matriculation,
         password: data.password,
