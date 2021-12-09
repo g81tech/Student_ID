@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
-import { AnyAaaaRecord } from "dns";
 import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
@@ -139,15 +138,19 @@ const Home:NextPage = ({ result }:any) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-
-    const res = await fetch("https://carteirinhauneb.vercel.app/api/registerStudent");
+export const getServerSideProps: GetServerSideProps = async ({res}) => {
+try {
+    const res = await fetch("http://carteirinhauneb.vercel.app/api/registerStudent");
     const result:any = await res.json();
     return {
-      props:  {
-        result,
-      },
-    }
+      props:  {result}
+    } 
+  }
+ catch {
+  res.statusCode = 404;
+  return {
+    props: {}
+  };
 }
-
+}
 export default Home;
