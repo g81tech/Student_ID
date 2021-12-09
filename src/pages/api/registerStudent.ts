@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { db } from "../../db/config";
 
 
-const registerStudent = async(req: NextApiRequest, res: NextApiResponse) => {
+export default async function registerStudent(req: NextApiRequest, res: NextApiResponse){
     
     switch (req.method) {
     case "POST": {
@@ -58,5 +58,3 @@ async function getRegistryID(req: NextApiRequest, res: NextApiResponse) {
     ? res.status(200).setHeader('Content-Type', 'application/json').end(JSON.stringify({allStudentIDs}))   
     : res.status(204).json({success: false, mensagem: 'Não há estudantes cadastrados!'});
 }
-
-export default registerStudent
