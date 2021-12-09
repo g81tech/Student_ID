@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from 'next'
 import {StudentCheckModel} from '../../db/models/StudentCheckModel'
 import * as bcrypt from 'bcrypt';
