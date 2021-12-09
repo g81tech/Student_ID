@@ -1,11 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import NextCors from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 import {StudentCheckModel} from '../../db/models/StudentCheckModel'
 import * as bcrypt from 'bcrypt';
 import { db } from "../../db/config";
 
 
-export default async function registerStudent(req: NextApiRequest, res: NextApiResponse){
+const registerStudent = async(req: NextApiRequest, res: NextApiResponse) => {
     
     switch (req.method) {
     case "POST": {
@@ -18,7 +17,6 @@ export default async function registerStudent(req: NextApiRequest, res: NextApiR
 }
 
 async function registryID(req: NextApiRequest, res: NextApiResponse) {
-
     await db.sync(); //Sincronizar tabelas do banco de dados
     const data = req.body;
     data.password = await bcrypt.hash(data.password, 8);
@@ -54,7 +52,17 @@ async function registryID(req: NextApiRequest, res: NextApiResponse) {
 
 async function getRegistryID(req: NextApiRequest, res: NextApiResponse) {
     const allStudentIDs = await StudentCheckModel.findAll();
-    return allStudentIDs.length > 0
-    ? res.status(200).setHeader('Content-Type', 'application/json').end(JSON.stringify({allStudentIDs}))   
-    : res.status(204).json({success: false, mensagem: 'Não há estudantes cadastrados!'});
+    /*return allStudentIDs.length > 0
+    ? res.status(200).json(allStudentIDs)
+    : res.status(204).json({success: "false", mensagem: 'Não há estudantes cadastrados!'});*/
+
+    if (allStudentIDs.length > 0)
+    {
+        return res.status(200).json(allStudentIDs)
+    }
+    else {
+        return res.status(204).json({})
+    }
 }
+
+export default registerStudent
