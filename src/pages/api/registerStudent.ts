@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import NextCors from 'next'
 import {StudentCheckModel} from '../../db/models/StudentCheckModel'
 import * as bcrypt from 'bcrypt';
 import { db } from "../../db/config";
-
+import cors from "cors";
 
 const registerStudent = async(req: NextApiRequest, res: NextApiResponse) => {
     
     switch (req.method) {
-    case "POST": {
+    case "OPTIONS": {
       return registryID(req, res);
     }
     case "GET": {
@@ -17,6 +18,7 @@ const registerStudent = async(req: NextApiRequest, res: NextApiResponse) => {
 }
 
 async function registryID(req: NextApiRequest, res: NextApiResponse) {
+    
     await db.sync(); //Sincronizar tabelas do banco de dados
     const data = req.body;
     data.password = await bcrypt.hash(data.password, 8);

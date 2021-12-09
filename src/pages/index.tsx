@@ -141,7 +141,7 @@ const Home:NextPage = ({ result }:any) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
-    const res = await fetch("https://carteirinhauneb-c4h8tw2cr-g81.vercel.app/api/registerStudent");
+    const res = await fetch("https://carteirinhauneb.vercel.app/api/registerStudent");
     const result:any = await res.json();
     return {
       props:  {

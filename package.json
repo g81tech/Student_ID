@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "moment": "^2.29.1",
     "next": "11.1.2",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cookie": "^0.4.1",
+    "@types/cors": "^2.8.12",
     "@types/moment": "^2.13.0",
     "@types/node": "^16.11.7",
     "@types/react": "^17.0.35",

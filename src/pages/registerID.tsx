@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { v4 as uuidv4 } from "uuid";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -53,13 +52,15 @@ const Register: NextPage = () => {
   const registration: SubmitHandler<Form> = async (data) => {
     //Chamada a API para checar se a matricula está ok
     setLoading(true);
-    const res = await fetch("https://carteirinhauneb-c4h8tw2cr-g81.vercel.app/api/authStudent", {
+    const res = await fetch("https://carteirinhauneb.vercel.app/api/authStudent", {
       body: JSON.stringify({
         matriculation: data.matriculation,
         password: data.password,
       }),
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json, text/plain, */*",
+        "Access-Control-Allow-Origin":"*",
+        'User-Agent': '*'
       },
       method: "POST",
     });
