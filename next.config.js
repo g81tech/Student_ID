@@ -12,3 +12,14 @@ module.exports = {
 module.exports = withImages({
   esModule: true,
 })
+
+module.exports = {
+    async rewrites() {
+        return [
+          {
+            source: '/api/:path*',
+            destination: 'https://carteirinhauneb.vercel.app/api/:path*',
+          },
+        ]
+      },
+  };

@@ -52,9 +52,17 @@ async function registryID(req: NextApiRequest, res: NextApiResponse) {
 
 async function getRegistryID(req: NextApiRequest, res: NextApiResponse) {
     const allStudentIDs = await StudentCheckModel.findAll();
-    return allStudentIDs.length > 0
+    /*return allStudentIDs.length > 0
     ? res.status(200).json(allStudentIDs)
-    : res.status(204).json({success: false, mensagem: 'Não há estudantes cadastrados!'});
+    : res.status(204).json({success: "false", mensagem: 'Não há estudantes cadastrados!'});*/
+
+    if (allStudentIDs.length > 0)
+    {
+        return res.status(200).json(allStudentIDs)
+    }
+    else {
+        return res.status(204).json({})
+    }
 }
 
 export default registerStudent

@@ -2,7 +2,10 @@ import type { NextPage } from "next";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { v4 as uuidv4 } from "uuid";
+<<<<<<< HEAD
 import React from "react";
+=======
+>>>>>>> cc445c431da5bc08b301edf221175e65e487af01
 
 import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -53,13 +56,15 @@ const Register: NextPage = () => {
   const registration: SubmitHandler<Form> = async (data) => {
     //Chamada a API para checar se a matricula está ok
     setLoading(true);
-    const res = await fetch("/api/authStudent", {
+    const res = await fetch("http://localhost:3000/api/authStudent", {
       body: JSON.stringify({
         matriculation: data.matriculation,
         password: data.password,
       }),
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json, text/plain, */*",
+        "Access-Control-Allow-Origin":"*",
+        'User-Agent': '*'
       },
       method: "POST",
     });
