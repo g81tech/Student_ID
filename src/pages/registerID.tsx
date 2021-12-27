@@ -2,11 +2,7 @@ import type { NextPage } from "next";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { v4 as uuidv4 } from "uuid";
-<<<<<<< HEAD
 import React from "react";
-=======
->>>>>>> cc445c431da5bc08b301edf221175e65e487af01
-
 import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
 
